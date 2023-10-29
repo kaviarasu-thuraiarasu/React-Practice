@@ -48,3 +48,7 @@
     width:100%;
     height:40%
 }
+
+.search-btn{
+    cursor: pointer;
+}
