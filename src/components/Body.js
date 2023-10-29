@@ -30,7 +30,7 @@ const Body = () => {
 
 
 
-      //const [list_data,setListData] = useState(resObj.data)
+      //const [list_data,setListData] = useState(resObj.data) //Array destructuring
       // or
 // const arr = useState(resObj.data)
 // const [list_data,setListData]=arr
