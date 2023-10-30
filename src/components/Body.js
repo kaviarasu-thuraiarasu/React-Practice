@@ -1,6 +1,7 @@
 import RestCard from './RestCard';
 import resObj from '../../utils/mock_data'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import Shimmer from './Shimmer'
 const Body = () => {
 
     // Normal Javascript Variable.With this normal variable we can't achieve the UI and data layer sync
@@ -30,21 +31,44 @@ const Body = () => {
 
 
 
-      //const [list_data,setListData] = useState(resObj.data) //Array destructuring
+     // const [list_data,setListData] = useState(resObj.data) //Array destructuring
+
+     const [list_data,setListData] = useState([])
+     const [initialState,setinitialState] = useState([])
       // or
 // const arr = useState(resObj.data)
 // const [list_data,setListData]=arr
 //or
-const arr = useState(resObj.data)
-const list_data=arr[0]
-const setListData=arr[1]
+// const arr = useState(resObj.data)
+// const list_data=arr[0]
+// const setListData=arr[1]
 
+useEffect(()=>{fetchData()},[])
 
-    return (
+const [search,setSearch] = useState("")
+const fetchData = async ()=>{
+  const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+  const json = await data.json()
+  setinitialState(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+    ?.restaurants)
+  setListData(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+?.restaurants)
+}
+// console.log(list_data)
+// if(list_data.length ===0){
+//   return <Shimmer/>
+// }
+    return initialState.length ===0 ? <Shimmer/> : (
       <div className="body">
         <div className="searchBar">
+          <input type="text" className="form-control" value={search} onChange={(e)=>{setSearch(e.target.value)}}/>
+          <button className="search-btn" onClick={()=>{
+            console.log(initialState)
+            const filtered = initialState.filter((data)=> data.info.name.toLowerCase().includes(search))
+            setListData(filtered.toLowerCase())
+          }}>Search</button>
             <button className="search-btn" onClick={()=>{
-                setListData(list_data.filter((data)=> data.rating>4))
+                setListData(list_data.filter((data)=> data.info.avgRating>4.2))
                
             }}>Top Rated Restuarant</button>
         </div>
@@ -53,8 +77,9 @@ const setListData=arr[1]
             <RestCard resName="A2B" cuisine="Biryani, Veg"  star="4.8" time="15 Minutes"/>
              */}
              {
+              
               //resObj.data.map((res,index)=> <RestCard resData={res} key={index}/>)
-              list_data.map((res,index)=> <RestCard resData={res} key={index}/>)
+              list_data.map((res,index)=> <RestCard resData={res.info} key={index}/>)
              }
   
         </div>  
