@@ -24,6 +24,11 @@ import ReactDOM from "react-dom/client";
 import Header from './components/Header'
 import Body from './components/Body'
 
+import {createBrowserRouter,RouterProvider,Outlet} from "react-router-dom"
+import Contact from "./components/Contact";
+import Error from "./components/Error";
+import RestaurantMenu from "./components/RestuarantMenu.";
+
 // const element = React.createElement("div", { id: "parent" }, [
 //   React.createElement("div", { id: "child1" }, [
 //     React.createElement("h1", {}, "Nuverlan Technologies cdfdfdfd"),
@@ -55,7 +60,7 @@ const element = (
 
 
 
-const Title = () => {
+const About = () => {
   return (
     <div>
       <h1> Nuverlan Technologies- My Dream company.</h1>
@@ -72,12 +77,36 @@ const AppLayout = () => {
   return (
     <div className="app">
       <Header />
-      <Body/>
+      {/**This is how we have to write the comments */}
+      {/* <Body/> */}
+      <Outlet/>
     </div>
   );
 };
 
+const appRouter = createBrowserRouter([{
+  path:"/",
+  element:<AppLayout/>,
+  errorElement:<Error/>,
+  children:[
+    {
+      path:"/",
+      element:<Body/>
+    },
+    {
+      path:"/about",
+      element:<About/>
+    },{
+      path:"/contact",
+      element:<Contact/>
+    },{
+      path:"/restaurants/:resId",
+      element:<RestaurantMenu/>
+    }
+  ]
+}])
 const dom = ReactDOM.createRoot(document.getElementById("root"));
 //dom.render(heading); // It will replece the div root element with element & this is  the way to render the element
 
-dom.render(<AppLayout />); // This is way to render the React Component.
+//dom.render(<AppLayout />); // This is way to render the React Component.
+dom.render(<RouterProvider router={appRouter} />); // This is way to render the React Component.

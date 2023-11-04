@@ -2,6 +2,7 @@ import RestCard from './RestCard';
 import resObj from '../../utils/mock_data'
 import {useState, useEffect} from 'react'
 import Shimmer from './Shimmer'
+import {Link} from "react-router-dom"
 const Body = () => {
 
     // Normal Javascript Variable.With this normal variable we can't achieve the UI and data layer sync
@@ -53,6 +54,8 @@ const fetchData = async ()=>{
     ?.restaurants)
   setListData(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
 ?.restaurants)
+console.log(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+  ?.restaurants)
 }
 // console.log(list_data)
 // if(list_data.length ===0){
@@ -63,9 +66,10 @@ const fetchData = async ()=>{
         <div className="searchBar">
           <input type="text" className="form-control" value={search} onChange={(e)=>{setSearch(e.target.value)}}/>
           <button className="search-btn" onClick={()=>{
-            console.log(initialState)
-            const filtered = initialState.filter((data)=> data.info.name.toLowerCase().includes(search))
-            setListData(filtered.toLowerCase())
+            
+            const filtered = initialState.filter((data)=> data.info.name.toLowerCase().includes(search.toLowerCase()))
+            
+            setListData(filtered)
           }}>Search</button>
             <button className="search-btn" onClick={()=>{
                 setListData(list_data.filter((data)=> data.info.avgRating>4.2))
@@ -79,7 +83,7 @@ const fetchData = async ()=>{
              {
               
               //resObj.data.map((res,index)=> <RestCard resData={res} key={index}/>)
-              list_data.map((res,index)=> <RestCard resData={res.info} key={index}/>)
+              list_data.map((res,index)=> <Link to={"/restaurants/"+res.info.id}  key={index}><RestCard resData={res.info}/></Link>)
              }
   
         </div>  
