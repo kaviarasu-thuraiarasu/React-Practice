@@ -28,6 +28,7 @@ import {createBrowserRouter,RouterProvider,Outlet} from "react-router-dom"
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestuarantMenu.";
+import About from "./components/About";
 
 // const element = React.createElement("div", { id: "parent" }, [
 //   React.createElement("div", { id: "child1" }, [
@@ -60,13 +61,7 @@ const element = (
 
 
 
-const About = () => {
-  return (
-    <div>
-      <h1> Nuverlan Technologies- My Dream company.</h1>
-    </div>
-  );
-};
+
 
 
 
