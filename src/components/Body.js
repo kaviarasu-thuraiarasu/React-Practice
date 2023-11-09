@@ -3,8 +3,9 @@ import resObj from '../../utils/mock_data'
 import {useState, useEffect} from 'react'
 import Shimmer from './Shimmer'
 import {Link} from "react-router-dom"
+import useOnlineStatus from "../../utils/useOnlineStatus"
 const Body = () => {
-
+console.log("body")
     // Normal Javascript Variable.With this normal variable we can't achieve the UI and data layer sync
 
     // To make UI and Data layer sync, we have to make super power variable(State variable)
@@ -36,6 +37,8 @@ const Body = () => {
 
      const [list_data,setListData] = useState([])
      const [initialState,setinitialState] = useState([])
+     const status = useOnlineStatus()
+     
       // or
 // const arr = useState(resObj.data)
 // const [list_data,setListData]=arr
@@ -61,6 +64,10 @@ console.log(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
 // if(list_data.length ===0){
 //   return <Shimmer/>
 // }
+
+if( status== false){
+  return (<h1>Internet is down!!</h1>)
+}
     return initialState.length ===0 ? <Shimmer/> : (
       <div className="body">
         <div className="searchBar">

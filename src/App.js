@@ -18,7 +18,7 @@
 // );
 
 // { id: "title", name: "tet"} ==> This is the place to add the attribute to the element!!
-import React from "react";
+import React,{Suspense, lazy} from "react";
 
 import ReactDOM from "react-dom/client";
 import Header from './components/Header'
@@ -27,9 +27,9 @@ import Body from './components/Body'
 import {createBrowserRouter,RouterProvider,Outlet} from "react-router-dom"
 import Contact from "./components/Contact";
 import Error from "./components/Error";
-import RestaurantMenu from "./components/RestuarantMenu.";
-import About from "./components/About";
-
+import RestaurantMenu from "./components/RestuarantMenu";
+//import About from "./components/About";
+const About = lazy(()=> import("./components/About"))
 // const element = React.createElement("div", { id: "parent" }, [
 //   React.createElement("div", { id: "child1" }, [
 //     React.createElement("h1", {}, "Nuverlan Technologies cdfdfdfd"),
@@ -90,7 +90,7 @@ const appRouter = createBrowserRouter([{
     },
     {
       path:"/about",
-      element:<About/>
+      element:<Suspense fallback={<h1>Loading....</h1>}><About/></Suspense>
     },{
       path:"/contact",
       element:<Contact/>
