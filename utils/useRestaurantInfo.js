@@ -2,7 +2,9 @@ import { useEffect, useState } from "react"
 
 const useRestaurantInfo = (resId)=>{
     const [resInfo,setresInfo] = useState(null)
+    
     useEffect(()=>{
+        console.log("customhook");
         fetchData()
     },[])
 

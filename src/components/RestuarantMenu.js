@@ -8,7 +8,7 @@ const RestaurantMenu = () => {
   // useEffect(() => {
   //   fetchMenu();
   // }, []);
-
+console.log("Hello");
 const menu = useRestaurantInfo(resId)
 
   // const fetchMenu = async () => {
